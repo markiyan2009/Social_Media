@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <h1 style="text-align: center;">{{community.name}}</h1>
+        <div class="row d-flex " style="text-align: center;">
+            <div class="col">
+                <h3>Post</h3> <br>
+                {% for post in posts %}
+                    <a href="{% url 'post_detail' post.pk %}" class="post_link">{{post.name}}</a> <br>
+                {%endfor%}
+            </div>
+            <div class="col">
+                <h3>Discusion </h3> <br>
+                {% for discusion in discusions %}
+                    
+                    <a href="{% url 'discusion' discusion.pk %}" class="post_link">{{discusion.topic}}</a> <br>
+                {%endfor%}
+            </div>
+        </div>
+        
+    </div>
+{%endblock%}

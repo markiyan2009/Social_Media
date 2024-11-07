@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <h1>{{discusion.topic}}</h1>
+        {% for comment in comments %}
+            <div class="row">
+                <h3>{{author}}</h3>
+                <p>{{discusion.text}}</p>
+            </div>
+        {%endfor%}
+    </div>
+{% endblock %}

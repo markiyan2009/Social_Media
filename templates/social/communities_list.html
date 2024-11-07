@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container center">
+        <form method="post">
+            {%csrf_token%}
+            <input type="text" name="filter" onchange="DropDownList()">
+        </form>
+        {% for community in communities %}
+            <a href="{% url 'community' community.pk %}" class="coms">{{community.name}}</a> <br>
+        {% endfor %}
+    </div>
+    
+    <script>
+        function DropDownList(){
+            document.getElementById('filter').innerHTML = '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"><li><a class="dropdown-item" href="#">Action</a></li><li><a class="dropdown-item" href="#">Another action</a></li><li><a class="dropdown-item" href="#">Something else here</a></li></ul>'
+        }
+    </script>
+    
+{% endblock %}
