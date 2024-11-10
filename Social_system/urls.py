@@ -21,5 +21,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
-    path('social/', include('social.urls'))
+    path('social/', include('social.urls')),
+    path('auth/' , include('autification.urls'))
 ]

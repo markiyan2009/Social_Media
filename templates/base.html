@@ -61,7 +61,11 @@
                     <li class="btn"><a href=""><button class="btn btn-success">Home</button></a></li>
                     <li><a href="{% url 'communities' %}"><button class="btn btn-success">Communities</button></a></li>
                     <li><a href=""><button class="btn btn-success">Profile</button></a></li>
-                    <li><a href=""><button class="btn btn-success">Logout</button></a></li>
+                    {%  if request.user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}"><button class="btn btn-success">Logout</button></a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}"><button class="btn btn-success">Login</button></a></li>
+                    {% endif %}
                 </ul>
             </div>
             
