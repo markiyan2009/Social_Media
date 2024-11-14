@@ -9,4 +9,5 @@ urlpatterns = [
     path('post/<int:pk>/', views.PostDetailView.as_view(), name = 'post_detail'),
     path('discusion/<int:pk>/', views.DiscusionDetailView.as_view(), name = 'discusion'),
     path('<int:community_pk>/post/create/', views.PostCreateView.as_view(), name='post_create'),
+    path('communities/filter',views.SearchCommunitiesView.as_view(), name='communities_filter')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

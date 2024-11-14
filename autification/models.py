@@ -7,9 +7,9 @@ from social.models import Community
 
 class Profile(models.Model):
     photo = models.ImageField(upload_to='profile_photos/')
-    subscribes = models.ManyToManyField(Community)
+    subscribes = models.ManyToManyField(Community, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=25)
-    about_user = models.TextField()
+    about_user = models.TextField(blank=True)
 
     

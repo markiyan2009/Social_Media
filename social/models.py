@@ -4,17 +4,15 @@ from tinymce.models import HTMLField
 
 # Create your models here.
 
+class Genre(models.Model):
+    name = models.CharField(max_length=30)
+    
+    def __str__(self):
+        return self.name
 class Community(models.Model):
     name = models.CharField(max_length=50)
-    GENRES_STATUS =[
-        ['games','Games'],
-        ['films','Films'],
-        ['programing','Programing'],
-        ['sport','Sport'],
-        ['fishing','Fishing'],
-
-    ]
-    genres = models.CharField(choices=GENRES_STATUS, max_length=40)
+    
+    genres = models.ForeignKey(Genre, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):

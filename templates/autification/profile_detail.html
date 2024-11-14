@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h1>{{profile.name}}</h1>
+        </div>
+        <div class="row">
+            <div class="col-5">
+                <img src="{{profile.photo.url}}">
+            </div>
+            <div class="col">
+                <button>Subscribes</button>
+            </div>
+        </div>
+        <div class="row">
+            <p>{{profile.aboute_user}}</p>
+        </div>
+        
+    </div>
+{% endblock %}

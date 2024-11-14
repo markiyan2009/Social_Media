@@ -1,18 +1,40 @@
 from typing import Any, Dict
 from django import http
 from django.forms.models import BaseModelForm
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from social.models import Comment, Community, Post, Discusion
+from social.models import Comment, Community, Post, Discusion, Genre
 from django.views.generic import ListView, DeleteView, DetailView, UpdateView, View, CreateView
 from social.forms import PostCreateForm
 from django.urls import reverse_lazy
+from autification.models import Profile
+from django.http import JsonResponse
 
 
 class ComunitiesListView(ListView):
     model = Community
     template_name = 'social/communities_list.html'
     context_object_name = 'communities'
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['profile'] = Profile.objects.filter(user = self.request.user).first()
+        return context
+
+
+class SearchCommunitiesView(View):
+    def get(self, request):
+        
+        query = request.GET.get('query', '')
+        print(query)
+        if query:
+            results = Genre.objects.filter(name__icontains=query)[:10]  
+            data = [{'name' : item.name} for item in results]
+        else:
+            data = []
+
+        return JsonResponse({"results": data})
 
 class CommunityDetailView(DetailView):
     model = Community

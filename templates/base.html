@@ -1,55 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
-       
-       ul {
-
-        list-style-type: none;
-        
-        
-        width: 25%;
-        background-color: #007FFF;
-        color: white;
-        height: 100%; 
-        position: fixed; 
-        overflow: auto;
-        }
-        li{
-            padding: 10px;
-        }
-
-        .coms{
-            font-size: 40px;
-            margin-bottom: 10px;
-            text-decoration: none;
-        }
-        .coms:hover{
-            text-decoration: underline;
-        }
-        .post_link{
-            font-size: 20px;
-            text-decoration: none;
-        }
-        .post_link:hover{
-            text-decoration: underline;
-        }
-        .center{
-            align-self: center;
-        }
-    </style>
+   
     <script>
-        tinymce.init({
-            selector: "#editor",
-            plugins: "advcode advtable autocorrect autolink checklist codesample editimage emoticons image link linkchecker lists media mediaembed powerpaste table tinymcespellchecker",
-            menubar: false,
-            height: 150,
-            width: '100%'
-        })
+    tinymce.init({
+    selector: "#editor",
+    plugins: "advcode advtable autocorrect autolink checklist codesample editimage emoticons image link linkchecker lists media mediaembed powerpaste table tinymcespellchecker",
+    menubar: false,
+    height: 150,
+    width: '100%'
+    })
     </script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
 </head>
 <body>
     <div class="container-fluid">
@@ -60,7 +28,10 @@
     
                     <li class="btn"><a href=""><button class="btn btn-success">Home</button></a></li>
                     <li><a href="{% url 'communities' %}"><button class="btn btn-success">Communities</button></a></li>
-                    <li><a href=""><button class="btn btn-success">Profile</button></a></li>
+                    
+                    {%  if request.user.is_authenticated and profile%}
+                        <li><p>{{profile}}</p> <a href="{% url 'profile_detail' profile.pk %}"><button class="btn btn-success">Profile</button></a></li>
+                    {%endif%}
                     {%  if request.user.is_authenticated %}
                         <li><a href="{% url 'logout' %}"><button class="btn btn-success">Logout</button></a></li>
                     {% else %}
@@ -80,5 +51,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
