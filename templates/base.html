@@ -30,7 +30,7 @@
                     <li><a href="{% url 'communities' %}"><button class="btn btn-success">Communities</button></a></li>
                     
                     {%  if request.user.is_authenticated and profile%}
-                        <li><p>{{profile}}</p> <a href="{% url 'profile_detail' profile.pk %}"><button class="btn btn-success">Profile</button></a></li>
+                        <li><a href="{% url 'profile_detail' profile.pk %}"><button class="btn btn-success">Profile</button></a></li>
                     {%endif%}
                     {%  if request.user.is_authenticated %}
                         <li><a href="{% url 'logout' %}"><button class="btn btn-success">Logout</button></a></li>

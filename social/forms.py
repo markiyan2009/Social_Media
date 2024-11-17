@@ -9,3 +9,8 @@ class PostCreateForm(ModelForm):
         widgets = {
             'post_html' : forms.Textarea(attrs = {'class':'form-control', 'id':'editor'})
         }
+
+class CommentCreateForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']

@@ -32,3 +32,8 @@ li{
 .center{
         align-self: center;
 }
+
+
+.profile_photo img{
+        width: 100px !important;
+}

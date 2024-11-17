@@ -3,11 +3,11 @@
     <div class="container center">
         
             
-        <input type="text" name="filter_communities" id="filter_communities">
+        <input type="text" name="filter_communities" id="filter_communities"> <button type="submit">Search</button>
         <div class="container" id="genres">
 
         </div>
-        <button type="submit">Search</button>
+         
         {% for community in communities %}
             <a href="{% url 'community' community.pk %}" class="coms">{{community.name}}</a> <br>
         {% endfor %}
