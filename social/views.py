@@ -23,7 +23,10 @@ class ComunitiesListView(ListView):
 
         # communities = Community.objects.filter(genres = fiter_input).first()
         # context['communities'] = communities
-        context['profile'] = Profile.objects.filter(user = self.request.user).first()
+        print(self.request.user)
+        if self.request.user.is_authenticated:
+            context['profile'] = Profile.objects.filter(user = self.request.user).first()
+            
         return context
 
 
@@ -136,3 +139,19 @@ class LikeCommentView(View):
         
         return HttpResponseRedirect(reverse_lazy('discusion', kwargs={'pk' : discusion.pk}))
 
+class SubscribeView(View):
+    def post(self, request, *args, **kwargs):
+        community = Community.objects.filter(pk = self.kwargs['community_pk']).first()
+        print(community)
+        is_subscribe = False
+        print(community.subscribers)
+        for subscribe in community.subscribers.all():
+            if subscribe == request.user:
+                is_subscribe = True
+                break
+        if not is_subscribe:
+            community.subscribers.add(request.user)
+        if is_subscribe:
+            community.subscribers.remove(request.user)
+
+        return HttpResponseRedirect(reverse_lazy('communities'))

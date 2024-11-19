@@ -9,7 +9,23 @@
         </div>
          
         {% for community in communities %}
-            <a href="{% url 'community' community.pk %}" class="coms">{{community.name}}</a> <br>
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'community' community.pk %}" class="coms">{{community.name}}</a>  
+            </div>
+            <div class="col">
+                <form action="{% url 'subscribe' community.pk %}" method="post">
+                    {% csrf_token %}
+                    {% if request.user in community.subscribers.all  %}
+                    <button type="submit" class="subscribe-button">Subscribe</button>
+                    {% else %}
+                    <button type="submit" class="subscribe-button">You subscribed</button>
+                    {%endif%}
+                </form>
+            </div>
+            
+        </div>
+            
         {% endfor %}
     </div>
     

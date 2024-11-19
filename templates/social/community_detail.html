@@ -8,6 +8,8 @@
                 {% for post in posts %}
                     <a href="{% url 'post_detail' post.pk %}" class="post_link">{{post.name}}</a> <br>
                 {%endfor%}
+                
+                <a href="{% url 'post_create' community.pk %}"><button type="submit">Create post</button></a>
             </div>
             <div class="col">
                 <h3>Discusion </h3> <br>

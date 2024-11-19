@@ -14,6 +14,7 @@ class Community(models.Model):
     
     genres = models.ForeignKey(Genre, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.PROTECT)
+    subscribers = models.ManyToManyField(User,  blank=True, related_name='sucribers')
 
     def __str__(self):
         return self.name

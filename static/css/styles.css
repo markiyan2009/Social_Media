@@ -35,5 +35,10 @@ li{
 
 
 .profile_photo img{
-        width: 100px !important;
+        width: 400px !important;
+        border-radius: 50%;
+}
+
+.subscribe-button{
+        margin-bottom: 10px;
 }

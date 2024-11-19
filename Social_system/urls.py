@@ -21,7 +21,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('tinymce/', include('tinymce.urls')),
+    path('r^tinymce/', include('tinymce.urls')),
     path('social/', include('social.urls')),
     path('auth/' , include('autification.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
