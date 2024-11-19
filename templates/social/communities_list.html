@@ -17,9 +17,9 @@
                 <form action="{% url 'subscribe' community.pk %}" method="post">
                     {% csrf_token %}
                     {% if request.user in community.subscribers.all  %}
-                    <button type="submit" class="subscribe-button">Subscribe</button>
-                    {% else %}
                     <button type="submit" class="subscribe-button">You subscribed</button>
+                    {% else %}
+                    <button type="submit" class="subscribe-button">subscribe</button>
                     {%endif%}
                 </form>
             </div>
