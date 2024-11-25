@@ -8,8 +8,21 @@
             <div class="col-1 profile_photo ">
                 <img src="{{profile.photo.url}}" class="rounded-circle">
             </div>
-            <div class="col">
-                <button>Subscribes</button>
+            
+
+            
+            <div class="dropdown">
+                <h1>{{communities}}</h1>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Subscribes
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    
+                    {% for community in communities %}
+                        
+                        <a class="dropdown-item" href="{% url 'community' community.pk %}">{{community.name}}</a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div class="row">

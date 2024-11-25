@@ -23,3 +23,14 @@ fetch(`/social/communities/filter?query=${encodeURIComponent(query)}`)
     })
     .catch(error => console.error('Помилка при пошуку:', error));
 });
+// const searchButton = document.getElementById('search_button');
+// searchButton.addEventListener('input', function (){
+//     fetch('/social/communities/search-results')
+//     .then(response => response.json())
+//     .then(data => {
+//         resultDiv.innerHTML = '';
+        
+//     })
+
+// });
+

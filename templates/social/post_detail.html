@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
     {{post.post_html|safe}}
+    
+    
     <form action="{% url 'like_post' post.pk %}" method="post">
         {%csrf_token%}
         <button type="submit" class='btn btn-danger'>Like</button>
         <span>{{post.likes.count}}</span>
     </form>
+    
     <a href="{% url 'community' community.pk%}"><button class="btn btn-primary">Return</button></a>
 {% endblock %}

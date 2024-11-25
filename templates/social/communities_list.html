@@ -3,7 +3,7 @@
     <div class="container center">
         
             
-        <input type="text" name="filter_communities" id="filter_communities"> <button type="submit">Search</button>
+        <input type="text" name="filter_communities" id="filter_communities"> <button type="submit" id="search_button">Search</button>
         <div class="container" id="genres">
 
         </div>
@@ -13,6 +13,7 @@
             <div class="col">
                 <a href="{% url 'community' community.pk %}" class="coms">{{community.name}}</a>  
             </div>
+            {% if request.user.is_authenticated %}
             <div class="col">
                 <form action="{% url 'subscribe' community.pk %}" method="post">
                     {% csrf_token %}
@@ -23,6 +24,7 @@
                     {%endif%}
                 </form>
             </div>
+            {% else %}{% endif %}
             
         </div>
             

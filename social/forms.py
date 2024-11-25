@@ -14,3 +14,8 @@ class CommentCreateForm(ModelForm):
     class Meta:
         model = Comment
         fields = ['text']
+
+class DiscusionCreateForm(ModelForm):
+    class Meta:
+        model = Discusion
+        fields = ['topic']

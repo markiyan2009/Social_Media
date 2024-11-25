@@ -7,6 +7,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
+from social.models import Community
 
 # Create your views here
 
@@ -24,6 +25,7 @@ class ProfileDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['communities'] = self.request.user.subscribers.all()
         context['profile'] = Profile.objects.filter(user = self.request.user).first()
         return context
     

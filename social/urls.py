@@ -12,5 +12,7 @@ urlpatterns = [
     path('communities/filter/',views.SearchCommunitiesView.as_view(), name='communities_filter'),
     path('<int:pk>/like_post/', views.LikePostView.as_view(), name='like_post'),
     path('<int:pk>/like_comment/', views.LikeCommentView.as_view(), name='like_comment'),
-    path('<int:community_pk>/subscribe', views.SubscribeView.as_view(), name = 'subscribe')
+    path('<int:community_pk>/subscribe', views.SubscribeView.as_view(), name = 'subscribe'),
+    path('<int:community_pk>/discusion/create/', views.DiscucsionCreateView.as_view(), name = 'discusion_create'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -5,12 +5,12 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from social.models import Comment, Community, Post, Discusion, Genre
 from django.views.generic import ListView, DeleteView, DetailView, UpdateView, View, CreateView
-from social.forms import PostCreateForm, CommentCreateForm
+from social.forms import PostCreateForm, CommentCreateForm, DiscusionCreateForm
 from django.urls import reverse_lazy, reverse
 from autification.models import Profile
 from django.http import JsonResponse, HttpResponseRedirect
-
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .mixins import IsSubscriberMixin, IsSubscriberFormsMixin
 
 class ComunitiesListView(ListView):
     model = Community
@@ -43,7 +43,7 @@ class SearchCommunitiesView(View):
 
         return JsonResponse({"results": data})
 
-class CommunityDetailView(DetailView):
+class CommunityDetailView(IsSubscriberMixin ,DetailView):
     model = Community
     template_name = 'social/community_detail.html'
     context_object_name = 'community'
@@ -51,11 +51,12 @@ class CommunityDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         community = context['community']
+        context['profile'] = Profile.objects.filter(user = self.request.user).first()
         context['posts'] = community.post_set.all()
         context['discusions'] = community.discusion_set.all()
 
         return context
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin,DetailView):
     model = Post
     template_name = 'social/post_detail.html'
     context_object_name = 'post'
@@ -65,7 +66,7 @@ class PostDetailView(DetailView):
         context['community'] = context['post'].community
         return context
     
-class DiscusionDetailView(DetailView):
+class DiscusionDetailView(LoginRequiredMixin ,DetailView):
     model = Discusion
     template_name = 'social/discusion_detail.html'
     context_object_name = 'discusion'
@@ -89,7 +90,7 @@ class DiscusionDetailView(DetailView):
 
             return redirect('discusion', pk=comment.discusion.pk)
 
-class PostCreateView(CreateView):
+class PostCreateView(IsSubscriberFormsMixin ,CreateView):
     form_class = PostCreateForm
     template_name = 'social/post_create.html'
 
@@ -100,7 +101,7 @@ class PostCreateView(CreateView):
         form.instance.community = Community.objects.filter(pk = self.kwargs['community_pk']).first()
         return super().form_valid(form)
     
-class LikePostView(View):
+class LikePostView(LoginRequiredMixin ,View):
     def post(self, request, pk, *args, **kwargs):
         post = Post.objects.filter(pk = pk).first()
         
@@ -119,7 +120,7 @@ class LikePostView(View):
         print(post.likes.count)
         return HttpResponseRedirect(reverse_lazy('post_detail', kwargs={'pk' : post.pk}))
     
-class LikeCommentView(View):
+class LikeCommentView(LoginRequiredMixin,View):
     def post(self, request, pk, *args, **kwargs):
         comment = Comment.objects.filter(pk = pk).first()
         discusion = comment.discusion 
@@ -139,7 +140,7 @@ class LikeCommentView(View):
         
         return HttpResponseRedirect(reverse_lazy('discusion', kwargs={'pk' : discusion.pk}))
 
-class SubscribeView(View):
+class SubscribeView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         community = Community.objects.filter(pk = self.kwargs['community_pk']).first()
         print(community)
@@ -155,3 +156,18 @@ class SubscribeView(View):
             community.subscribers.remove(request.user)
 
         return HttpResponseRedirect(reverse_lazy('communities'))
+    
+class DiscucsionCreateView(IsSubscriberFormsMixin, CreateView):
+    form_class = DiscusionCreateForm
+    template_name = 'social/discusion_create.html'
+    
+
+    def get_success_url(self):
+        return  reverse_lazy('community', kwargs ={'pk' : self.kwargs['community_pk']})
+
+    def form_valid(self, form):
+        community = Community.objects.filter(pk =self.kwargs['community_pk']).first()
+        author = self.request.user
+        form.instance.community = community
+        form.instance.author = author
+        return super().form_valid(form)
