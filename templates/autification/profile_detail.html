@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container">
+        
         <div class="row">
             <h1>{{profile.name}}</h1>
         </div>
@@ -12,14 +13,13 @@
 
             
             <div class="dropdown">
-                <h1>{{communities}}</h1>
+                
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Subscribes
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     
                     {% for community in communities %}
-                        
                         <a class="dropdown-item" href="{% url 'community' community.pk %}">{{community.name}}</a>
                     {% endfor %}
                 </div>
@@ -28,6 +28,8 @@
         <div class="row">
             <p>{{profile.aboute_user}}</p>
         </div>
+
+
         
     </div>
 {% endblock %}

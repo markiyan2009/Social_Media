@@ -9,7 +9,7 @@ class Profile(models.Model):
     photo = models.ImageField(upload_to='profile_photos/')
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=25)
+    name = models.CharField(max_length=25, blank=True)
     about_user = models.TextField(blank=True)
 
     
