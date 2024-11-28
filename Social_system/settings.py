@@ -129,37 +129,39 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL='/media/'
 MEDIA_ROOT = BASE_DIR /'media'
 
-LOGIN_REDIRECT_URL = 'communities/'
+LOGIN_REDIRECT_URL = 'communities'
+LOGIN_URL = "login"
+LOGOUT_REDIRECT_URL = LOGIN_URL
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-TINYMCE_JS_ROOT = os.path.join(BASE_DIR, 'static/js/tiny_mce/')
-TINYMCE_JS_URL = 'http://debug.example.org/tiny_mce/tiny_mce_src.js'
-TINYMCE_DEFAULT_CONFIG = {
-    "height": "320px",
-    "width": "960px",
-    "menubar": "file edit view insert format tools table help",
-    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
-    "fullscreen insertdatetime media table paste code help wordcount spellchecker",
-    "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
-    "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
-    "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
-    "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
-    "a11ycheck ltr rtl | showcomments addcomment code",
-    "custom_undo_redo_levels": 10,
-    "language": "es_ES",  # To force a specific language instead of the Django current language.
-}
-TINYMCE_SPELLCHECKER = True
-TINYMCE_COMPRESSOR = True
-TINYMCE_EXTRA_MEDIA = {
-    'css': {
-        'all': [
-            ...
-        ],
-    },
-    'js': [
-        ...
-    ],
-}
+# # TINYMCE_JS_ROOT = os.path.join(BASE_DIR, 'static/js/tiny_mce/')
+# # TINYMCE_JS_URL = 'http://debug.example.org/tiny_mce/tiny_mce_src.js'
+# TINYMCE_DEFAULT_CONFIG = {
+#     "height": "320px",
+#     "width": "960px",
+#     "menubar": "file edit view insert format tools table help",
+#     "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
+#     "fullscreen insertdatetime media table paste code help wordcount spellchecker",
+#     "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
+#     "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
+#     "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
+#     "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
+#     "a11ycheck ltr rtl | showcomments addcomment code",
+#     "custom_undo_redo_levels": 10,
+#     "language": "es_ES",  # To force a specific language instead of the Django current language.
+# }
+# TINYMCE_SPELLCHECKER = True
+# # TINYMCE_COMPRESSOR = True
+# TINYMCE_EXTRA_MEDIA = {
+#     'css': {
+#         'all': [
+#             ...
+#         ],
+#     },
+#     'js': [
+#         ...
+#     ],
+# }

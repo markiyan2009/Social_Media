@@ -19,3 +19,4 @@ class DiscusionCreateForm(ModelForm):
     class Meta:
         model = Discusion
         fields = ['topic']
+

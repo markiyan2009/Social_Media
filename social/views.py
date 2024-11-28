@@ -1,5 +1,6 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from django import http
+from django.db import models
 from django.forms.models import BaseModelForm
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
@@ -11,6 +12,7 @@ from autification.models import Profile
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import IsSubscriberMixin, IsSubscriberFormsMixin
+
 
 class ComunitiesListView(ListView):
     model = Community
@@ -171,3 +173,46 @@ class DiscucsionCreateView(IsSubscriberFormsMixin, CreateView):
         form.instance.community = community
         form.instance.author = author
         return super().form_valid(form)
+    
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'social/post_delete.html'
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('community', kwargs = {'pk' : self.kwargs['community_pk']})
+    
+    def get_object(self, queryset = None):
+        post = Post.objects.filter(pk = self.kwargs['post_pk']).first()
+
+        return post
+    
+    
+class PostUpdateView(UpdateView):
+    model = Post
+    form_class = PostCreateForm
+    template_name = 'social/post_update.html'
+    
+    def get_success_url(self) -> str:
+        return reverse_lazy('community', kwargs = {'pk' : self.kwargs['community_pk']})
+    
+    def get_object(self, queryset = None):
+        post = Post.objects.filter(pk = self.kwargs['post_pk']).first()
+
+        return post
+    
+
+
+class DiscusionDeleteView(DeleteView):
+    model = Discusion
+    template_name = 'social/discusion_delete.html'
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('community', kwargs = {'pk' : self.kwargs['community_pk']})
+    
+    def get_object(self, queryset = None):
+        discusion = Discusion.objects.filter(pk = self.kwargs['discusion_pk']).first()
+
+        return discusion
+    
+    
+    

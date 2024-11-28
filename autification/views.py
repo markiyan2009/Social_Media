@@ -19,8 +19,7 @@ class CustomLoginView(LoginView):
     template_name = 'autification/login.html'
     redirect_authenticated_user = True
 
-class CustomLogoutView(LogoutView):
-    next_page = 'login'
+
     
 class ProfileDetailView(DetailView):
     template_name = 'autification/profile_detail.html'
@@ -34,6 +33,7 @@ class ProfileDetailView(DetailView):
         profile = Profile.objects.filter(user = self.request.user).first()
         
         context['profile'] = profile
+        return context
         
 
 class RegisterView(CreateView):
@@ -51,7 +51,6 @@ class ProfileCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        # if not form.instance.photo:
             
 
         return super().form_valid(form)

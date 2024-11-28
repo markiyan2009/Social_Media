@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    <label for="bootstrapInputTinyMCE0a" class="form-label"></label>
+    {{form.media}}
+    {{form.as_p}}
+    <button type="submit">Update</button>
+</form>
+<a href="{% url 'community' post.community.pk %}"><button type="submit">Return</button></a>
+
+{% endblock %}
