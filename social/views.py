@@ -12,6 +12,8 @@ from autification.models import Profile
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import IsSubscriberMixin, IsSubscriberFormsMixin
+from django.shortcuts import get_object_or_404 
+
 
 
 class ComunitiesListView(ListView):
@@ -212,7 +214,7 @@ class DiscusionDeleteView(DeleteView):
     def get_object(self, queryset = None):
         discusion = Discusion.objects.filter(pk = self.kwargs['discusion_pk']).first()
 
-        return discusion
+        return get_object_or_404(Discusion, pk=self.kwargs['discusion_pk']) 
     
     
     

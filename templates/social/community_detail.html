@@ -8,9 +8,11 @@
                 {% for post in posts %}
                     <a href="{% url 'post_detail' post.pk %}" class="post_link">{{post.name}}</a> <br>
                     {% if community.author == request.user %}
-                    
-                        <a href="{% url 'post_update' community.pk post.pk %}"><button type="submit" class="btn btn-warning">Update</button></a>
+                        <div class="col">
+                            <a href="{% url 'post_update' community.pk post.pk %}"><button type="submit" class="btn btn-warning">Update</button></a>
                         <a href="{% url 'post_delete' community.pk post.pk %}"><button type="submit" class="btn btn-danger">Delete</button></a>
+                        </div>
+                        
                     {% endif %}
                 {%endfor%}
 
@@ -24,8 +26,12 @@
                     
                     <a href="{% url 'discusion' discusion.pk %}" class="post_link">{{discusion.topic}}</a> <br>
                     {% if discusion.author == request.user %}
-                   
-                        <a href="{% url 'discusion_delete' community.pk discusion.pk %}"><button type="submit" class="btn btn-danger">Delete</button></a>
+                        <div class="col">
+                            <a href="{% url 'discusion_delete' community.pk discusion.pk %}"><button type="submit" class="btn btn-danger">Delete</button></a>
+                        </div>
+                            
+                        
+                        
                     {% endif %}
                 {%endfor%}
                 {% if is_subscriber %}

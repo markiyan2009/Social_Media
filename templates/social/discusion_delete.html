@@ -3,7 +3,7 @@
 
 <h3>Delete discusion</h3>
 <h5>Do you realy want delete discusion?</h5>
-<form method="discusion">
+<form method="post">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">Yes, delete</button>
     <a href="{% url 'community' discusion.community.pk %}" class="btn btn-secondary">No, return to community</a>
