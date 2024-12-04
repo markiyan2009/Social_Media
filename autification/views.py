@@ -4,14 +4,14 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
 from autification.models import Profile
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from social.models import Community
 from django.contrib.auth.forms import UserCreationForm
-from .forms import ProfileCreateForm
+from .forms import ProfileCreateForm, ProfileUpdateForm
 
 # Create your views here
 
@@ -57,3 +57,12 @@ class ProfileCreateView(CreateView):
     
     def get_success_url(self):
         return reverse_lazy('communities')
+    
+class ProfileUpdateView(UpdateView):
+    form_class = ProfileUpdateForm
+    model = Profile
+    template_name = 'social/profile_update.html'
+
+    def get_success_url(self):
+        return reverse_lazy('profile', kwargs = {'pk': self.get_object().pk})
+
