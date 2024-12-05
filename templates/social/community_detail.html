@@ -17,7 +17,7 @@
                     {% endif %}
                 {%endfor%}
 
-                {% if is_subscriber %}
+                {% if community.author == request.user%}
                     <a href="{% url 'post_create' community.pk %}"><button type="submit">Create post</button></a>
                 {% else %}{%endif%}
             </div>
@@ -35,7 +35,7 @@
                         
                     {% endif %}
                 {%endfor%}
-                {% if is_subscriber %}
+                {% if is_subscriber or community.author == request.user %}
                 <a href="{% url 'discusion_create' community.pk %}"><button type="submit">Create discusion</button></a>
                 {% else %}{%endif%}
             </div>

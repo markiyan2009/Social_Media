@@ -20,3 +20,9 @@ class DiscusionCreateForm(ModelForm):
         model = Discusion
         fields = ['topic']
 
+class CommunitiesFilterForm(forms.Form):
+    filter = forms.CharField(required=False, label='Filter')
+
+    def __init__(self, *args, **kwargs):
+        super(CommunitiesFilterForm, self).__init__(*args, **kwargs)
+        self.fields["filter"].widget.attrs.update({"class": "form-control", 'id':'filter_communities', 'name' : "filter_communities" })

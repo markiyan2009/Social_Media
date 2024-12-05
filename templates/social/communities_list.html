@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container center">
-        
+        <div class="row-3">
+            <form method="get">
+                {{form.as_p}}
+                <button type="submit" id="search_button">Search</button>
+            </form>
             
-        <input type="text" name="filter_communities" id="filter_communities"> <button type="submit" id="search_button">Search</button>
-        <div class="container" id="genres">
-
+            <div class="container" id="genres">
+    
+            </div>
         </div>
+        
          
         {% for community in communities %}
         <div class="row">
@@ -25,10 +30,29 @@
                 </form>
             </div>
             {% else %}{% endif %}
+
             
         </div>
             
         {% endfor %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+        
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        
+        
     </div>
     
     

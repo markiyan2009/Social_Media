@@ -18,10 +18,12 @@ from .forms import ProfileCreateForm, ProfileUpdateForm
 class CustomLoginView(LoginView):
     template_name = 'autification/login.html'
     redirect_authenticated_user = True
+    
 
 
     
 class ProfileDetailView(DetailView):
+    
     template_name = 'autification/profile_detail.html'
     model = Profile
     context_object_name = 'profile'
@@ -29,7 +31,7 @@ class ProfileDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['communities'] = self.request.user.subscribers.all()
-        
+
         profile = Profile.objects.filter(user = self.request.user).first()
         
         context['profile'] = profile
@@ -61,8 +63,8 @@ class ProfileCreateView(CreateView):
 class ProfileUpdateView(UpdateView):
     form_class = ProfileUpdateForm
     model = Profile
-    template_name = 'social/profile_update.html'
+    template_name = 'autification/profile_update.html'
 
     def get_success_url(self):
-        return reverse_lazy('profile', kwargs = {'pk': self.get_object().pk})
+        return reverse_lazy('communities')
 

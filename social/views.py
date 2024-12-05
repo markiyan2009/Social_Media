@@ -6,7 +6,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from social.models import Comment, Community, Post, Discusion, Genre
 from django.views.generic import ListView, DeleteView, DetailView, UpdateView, View, CreateView
-from social.forms import PostCreateForm, CommentCreateForm, DiscusionCreateForm
+from social.forms import PostCreateForm, CommentCreateForm, DiscusionCreateForm, CommunitiesFilterForm
 from django.urls import reverse_lazy, reverse
 from autification.models import Profile
 from django.http import JsonResponse, HttpResponseRedirect
@@ -20,14 +20,31 @@ class ComunitiesListView(ListView):
     model = Community
     template_name = 'social/communities_list.html'
     context_object_name = 'communities'
+    paginate_by = 5
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         # fiter_input = self.kwargs['filter_communities']
 
-        # communities = Community.objects.filter(genres = fiter_input).first()
-        # context['communities'] = communities
-        print(self.request.user)
+        communities = Community.objects.all()
+        
+        query = int(self.request.GET.get('page','1'))
+        print(query)
+
+        filter_community = self.request.GET.get("filter", "")
+        if filter_community:
+            comunity_filter = Community.objects.filter(genres__name = filter_community).all()
+            context['communities'] = comunity_filter
+
+        else:
+            context['communities'] = Community.objects.all()
+        
+
+        context['communities'] = context['communities'][(query*5) -5 :query*5]
+        
+        context["form"] = CommunitiesFilterForm(self.request.GET)
+
+        
         if self.request.user.is_authenticated:
             context['profile'] = Profile.objects.filter(user = self.request.user).first()
             
@@ -38,7 +55,7 @@ class SearchCommunitiesView(View):
     def get(self, request):
         
         query = request.GET.get('query', '')
-        print(query)
+        
         if query:
             results = Genre.objects.filter(name__icontains=query)[:10]  
             data = [{'name' : item.name} for item in results]
