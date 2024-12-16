@@ -1,5 +1,6 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional, Type
 from django import http
+from django.forms.forms import BaseForm
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -10,14 +11,22 @@ from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from social.models import Community
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .forms import ProfileCreateForm, ProfileUpdateForm
+from django import forms
 
 # Create your views here
 
 class CustomLoginView(LoginView):
     template_name = 'autification/login.html'
     redirect_authenticated_user = True
+ 
+
+    def get_form(self, form_class = None ):
+        form = super().get_form(form_class)
+        form.fields['username'].widget = forms.TextInput(attrs = {'class' : 'form-control'})
+        form.fields['password'].widget = forms.PasswordInput(attrs={'class' : 'form-control'})
+        return form
     
 
 
@@ -46,6 +55,13 @@ class RegisterView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect(self.success_url)
+    
+    def get_form(self, form_class = None):
+        form = super().get_form(form_class)
+        form.fields['username'].widget = forms.TextInput(attrs = {'class' : 'form-control'})
+        form.fields['password1'].widget = forms.PasswordInput(attrs={'class' : 'form-control'})
+        form.fields['password2'].widget = forms.PasswordInput(attrs={'class' : 'form-control'})
+        return form
 
 class ProfileCreateView(CreateView):
     form_class = ProfileCreateForm

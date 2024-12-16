@@ -7,24 +7,27 @@
             <h3>{{author}}</h3>
             <p>{{discusion.text}}</p>
         </div>
-       <div class="row">
+       
         {% for comment in comments %}
+        <div class="row comments">
             <h4>{{comment.author}}</h4> <br>
             <p>{{comment.text}}</p>
             <form action="{% url 'like_comment' comment.pk %}" method="post">
                 {% csrf_token %}
-                <button type="submit">Like</button> 
+                <button type="submit" class="btn btn-danger">Like</button> 
                 {{comment.likes.count}}
             </form>
+        </div>
         {%endfor%}
-       </div>
+       
        <div class="row">
             <form method="post">
                 {% csrf_token %}
                 {{comment_form.as_p}}
-                <button type="submit">Add comment</button>
+                <button type="submit" class="btn btn-warning">Add comment</button>
             </form>
        </div>
+       <a href="{% url 'community' community.pk%}"><button class="btn btn-primary">Return</button></a>
     </div>
 
 {% endblock %}

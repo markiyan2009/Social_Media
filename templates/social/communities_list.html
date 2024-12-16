@@ -2,14 +2,22 @@
 {% block content %}
     <div class="container center">
         <div class="row-3">
-            <form method="get">
-                {{form.as_p}}
-                <button type="submit" id="search_button">Search</button>
-            </form>
             
-            <div class="container" id="genres">
-    
-            </div>
+            <form method="get">
+                {%csrf_token%}
+                {{form.as_p}}
+                <button type="submit" id="search_button" class="btn btn-secondary">Search</button>
+            </form>
+            <div class="dropdown">
+                <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown link
+                  </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </div>
         </div>
         
          
@@ -23,9 +31,9 @@
                 <form action="{% url 'subscribe' community.pk %}" method="post">
                     {% csrf_token %}
                     {% if request.user in community.subscribers.all  %}
-                    <button type="submit" class="subscribe-button">You subscribed</button>
+                        <button type="submit" class="btn btn-outline-primary">You subscribed</button>
                     {% else %}
-                    <button type="submit" class="subscribe-button">subscribe</button>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
                     {%endif%}
                 </form>
             </div>
@@ -35,23 +43,36 @@
         </div>
             
         {% endfor %}
-        <div class="pagination">
-            <span class="step-links">
+        
+        <nav aria-label="...">
+            <ul class="pagination">
                 {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-        
-                <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-        
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
-            </span>
-        
+                <li class="page-item">
+                    
+                    <span class="page-link"><a href="?page={{ page_obj.previous_page_number }}">previous</a></span>
+                </li>
+                {%endif%}
+                {% for i in page_obj.paginator.page_range %}
+                    
+                    {% if i == page_obj.number %}
+                    <li class="page-item active">
+                        <span class="page-link">
+                        {{i}}
+                        
+                        </span>
+                    </li>
+                    {% else %}
+
+                    <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                    {% endif %}
+                {% endfor %}
+              {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
         
     </div>
     

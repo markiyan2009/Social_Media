@@ -16,21 +16,13 @@ fetch(`/social/communities/filter?query=${encodeURIComponent(query)}`)
         resultDiv.innerHTML = ''; // Очищуємо попередні результати
 
         data.results.forEach(item => {
-            const itemElement = document.createElement('p');
+            const itemElement = document.createElement('li');
             itemElement.textContent = item.name;
+            itemElement.className = 'dropdown-item';
+            itemElement.href = '#';
             resultDiv.appendChild(itemElement);
         });
     })
     .catch(error => console.error('Помилка при пошуку:', error));
 });
-// const searchButton = document.getElementById('search_button');
-// searchButton.addEventListener('input', function (){
-//     fetch('/social/communities/search-results')
-//     .then(response => response.json())
-//     .then(data => {
-//         resultDiv.innerHTML = '';
-        
-//     })
-
-// });
 

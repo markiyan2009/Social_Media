@@ -7,6 +7,12 @@ class ProfileCreateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['name','photo', 'about_user']
+        widgets = {
+            'name' : forms.TextInput(attrs={'class' : 'form-control'}),
+            'photo' : forms.FileInput(attrs={'class' : 'form-control'}),
+            'about_user' : forms.Textarea(attrs={'class' : 'form-control'})
+
+        }
         
 class ProfileUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -20,5 +26,12 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['photo', 'name','about_user']
+        widgets = {
+            'name' : forms.TextInput(attrs={'class' : 'form-control'}),
+            'photo' : forms.FileInput(attrs={'class' : 'form-control'}),
+            'about_user' : forms.Textarea(attrs={'class' : 'form-control'})
+
+        }
+
     
         

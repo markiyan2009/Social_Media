@@ -10,7 +10,7 @@
     position: fixed; 
     overflow: auto;
 }
-li{
+.side-navbar li{
         padding: 10px;
 }
 
@@ -35,15 +35,48 @@ li{
 
 
 .profile_photo img{
-        width: 400px !important;
-        border-radius: 50%;
+        width: 200px !important;
+        height: 200px !important;
 }
 
-.subscribe-button{
-        margin-bottom: 10px;
-}
+
 
 /* .subscribs-button{
         position: absolute;
         right: 50px;
 } */
+
+.main{
+        margin-left: 20px;
+}
+#search-buutton{
+        margin-top: 10px;
+}
+
+.main-text{
+        text-align: center;
+        color: white;
+        background-color: #0d6efd;
+        width: 25%;
+        margin: 0 auto;
+        padding: 5px;      
+}
+
+
+.post-detail{
+        position: relative;
+}
+.subscribers{
+        position: absolute;
+        top: 20px;
+        right: 10px;
+}
+.comments{
+        padding-bottom: 10px;
+}
+.about_user{
+        margin: 15px;
+        padding: 10px;
+        background-color: #0d6efd;
+        color: white;
+}

@@ -97,6 +97,7 @@ class DiscusionDetailView(LoginRequiredMixin ,DetailView):
         context['comments'] = context['discusion'].comments.all()
         
         context['comment_form'] = CommentCreateForm()
+        context['community'] = context['discusion'].community
         
         return context
     
@@ -121,7 +122,10 @@ class PostCreateView(IsSubscriberFormsMixin ,CreateView):
     def form_valid(self, form):
         form.instance.community = Community.objects.filter(pk = self.kwargs['community_pk']).first()
         return super().form_valid(form)
-    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['community'] = Community.objects.filter(pk = self.kwargs['community_pk']).first()
+        return context
 class LikePostView(LoginRequiredMixin ,View):
     def post(self, request, pk, *args, **kwargs):
         post = Post.objects.filter(pk = pk).first()
@@ -192,6 +196,10 @@ class DiscucsionCreateView(IsSubscriberFormsMixin, CreateView):
         form.instance.community = community
         form.instance.author = author
         return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['community'] = Community.objects.filter(pk =self.kwargs['community_pk']).first()
+        return context
     
 class PostDeleteView(DeleteView):
     model = Post

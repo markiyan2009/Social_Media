@@ -7,8 +7,9 @@
                 <label for="bootstrapInputTinyMCE0a" class="form-label"></label>
                 {{form.media}}
                 {{form.as_p}}
-                <button type="submit">Post</button>
+                <button type="submit" class="btn btn-warning">Post</button>
             </form>
         </div>
+        <a href="{% url 'community' community.pk%}"><button class="btn btn-primary">Return</button></a>
     </div>
 {% endblock %}
