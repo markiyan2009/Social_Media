@@ -14,17 +14,17 @@
             
             <div class="dropdown">
                 
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Subscribes
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                </a>
+                <ul class="dropdown-menu">
                     
                     {% for community in communities %}
-                        <a class="dropdown-item" href="{% url 'community' community.pk %}">{{community.name}}</a>
+                        <li><a class="dropdown-item" href="{% url 'community' community.pk %}">{{community.name}}</a></li>
                     {% endfor %}
-                </div>
             </div>
         </div>
+        
         <div class="row about_user rounded">
             <p>{{profile.about_user}}</p>
         </div>

@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            
+                <div class="col">
+                    <input type="submit" class="btn btn-primary" id="posts-random" name="posts-btn"  value="Posts">
+                </div>
+
+                <div class="col">
+                    <input type="submit" class="btn btn-primary" id="disc-random" name="disc-btn" value="Discusions">
+                    
+                </div>
+            
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="container" id="result-random">
+
+            </div>
+            
+        </div>
+    </div>
+    <script >
+var btnRandomPosts = document.getElementById('posts-random');
+const btnRandomDisc = document.getElementById('disc-random');
+const resultRandom = document.getElementById('result-random');
+
+
+document.addEventListener('DOMContentLoaded', (event) => { 
+    
+    if (btnRandomPosts) { 
+        btnRandomPosts.addEventListener('click', function() {
+            resultRandom.innerHTML = '';
+
+
+            fetch('/social/home/random/?posts-btn=true')
+            .then(response => response.json())
+            .then(data => {
+                
+                data.results.forEach(item =>{
+                    console.log(item);
+                    
+                    const rowRandom = document.createElement('div');
+                    rowRandom.className = 'row';
+                    const  postName = document.createElement('a');
+                    const postCommunity = document.createElement('a');
+                    const genre = document.createElement('p');
+                    
+                    const postNameCol = document.createElement('div');
+                    postNameCol.className = 'col';
+                    const postCommunityCol = document.createElement('div');
+                    postCommunityCol.className = 'col';
+                    const genreCol = document.createElement('div');
+                    genreCol.className = 'col';
+                    
+                    
+                    postName.innerText =  item.name;
+                    postName.href =  'post/' + item.post_pk;
+                    postName.style = 'font-size: 30px;';
+                    postCommunity.innerText = item.community_name;
+                    postCommunity.href = 'community/' + item.community_pk;
+                    postCommunity.style = 'font-size: 30px;';
+                    genre.innerText = item.community_genre;
+                    genre.style = 'font-size: 30px;'
+
+                    postNameCol.appendChild(postName);
+                    postCommunityCol.appendChild(postCommunity);
+                    genreCol.appendChild(genre)
+                    
+                    rowRandom.appendChild(postNameCol);
+                    rowRandom.appendChild(postCommunityCol);
+                    rowRandom.appendChild(genreCol);
+                   
+                    resultRandom.appendChild(rowRandom);
+                });
+            })
+            .catch(error => console.error('Помилка при пошуку:', error));
+})}});
+        
+document.addEventListener('DOMContentLoaded', (event) => { 
+    
+    if (btnRandomDisc) { 
+        btnRandomDisc.addEventListener('click', function() {
+            resultRandom.innerHTML = '';
+
+
+            fetch('/social/home/random/?disc-btn=true')
+            .then(response => response.json())
+            .then(data => {
+                
+                data.results.forEach(item =>{
+                    console.log(item);
+                    
+                    const rowRandom = document.createElement('div');
+                    rowRandom.className = 'row';
+                    const  discName = document.createElement('a');
+                    const discCommunity = document.createElement('a');
+                    const genre = document.createElement('p');
+                    
+                    
+                    const discNameCol = document.createElement('div');
+                    discNameCol.className = 'col';
+                    const discCommunityCol = document.createElement('div');
+                    discCommunityCol.className = 'col';
+                    const genreCol = document.createElement('div');
+                    genreCol.className = 'col';
+                    
+                    
+                    discName.innerText =  item.name;
+                    discName.href =  'discusion/' + item.disc_pk;
+                    discName.style = 'font-size: 30px;';
+                    discCommunity.innerText = item.community_name;
+                    discCommunity.href = 'community/' + item.community_pk;
+                    discCommunity.style = 'font-size: 30px;'
+                    genre.innerText = item.community_genre;
+                    genre.style = 'font-size: 30px;';
+                    
+
+                    discNameCol.appendChild(discName);
+                    discCommunityCol.appendChild(discCommunity);
+                    genreCol.appendChild(genre)
+                    
+                    rowRandom.appendChild(discNameCol);
+                    rowRandom.appendChild(discCommunityCol);
+                    rowRandom.appendChild(genreCol);
+                   
+                    resultRandom.appendChild(rowRandom);
+                });
+            })
+            .catch(error => console.error('Помилка при пошуку:', error));
+})}});
+        
+    </script>
+
+{% endblock %}

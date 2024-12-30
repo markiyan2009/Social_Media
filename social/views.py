@@ -5,7 +5,7 @@ from django.forms.models import BaseModelForm
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from social.models import Comment, Community, Post, Discusion, Genre
-from django.views.generic import ListView, DeleteView, DetailView, UpdateView, View, CreateView
+from django.views.generic import ListView, DeleteView, DetailView, UpdateView, View, CreateView, TemplateView
 from social.forms import PostCreateForm, CommentCreateForm, DiscusionCreateForm, CommunitiesFilterForm
 from django.urls import reverse_lazy, reverse
 from autification.models import Profile
@@ -13,7 +13,57 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import IsSubscriberMixin, IsSubscriberFormsMixin
 from django.shortcuts import get_object_or_404 
+import random
 
+class HomeView(TemplateView):
+    template_name = 'social/home.html'
+class HomeRandomView(View):
+    def get(self, request):
+        if request.GET.get('posts-btn'):
+            posts = list(Post.objects.all())
+            print(posts)
+            random.shuffle(posts)
+            
+            data = [
+                {'name' : item.name, 
+                'community_name' : item.community.name,
+                'post_pk' : str(item.pk), 
+                'community_pk' : item.community.pk,
+                'community_genre' : item.community.genre.name
+                
+                } for item in posts]
+            
+        elif request.GET.get('disc-btn'):
+            
+            disc = list(Discusion.objects.all())
+            print(disc)
+            random.shuffle(disc)
+            
+            data = [
+                {'name' : item.topic, 
+                'community_name' : item.community.name,
+                'disc_pk' : str(item.pk), 
+                'community_pk' : item.community.pk,
+                'community_genre' : item.community.genre.name
+                
+                
+            } for item in disc]
+            
+        else:
+            posts = list(Post.objects.all())
+            print(posts)
+            random.shuffle(posts)
+            
+            data = [
+                {'name' : item.name, 
+                'community_name' : item.community.name,
+                'post_pk' : str(item.pk), 
+                'community_pk' : item.community.pk,
+                'community_genre' : item.community.genre
+
+                } for item in posts]
+
+        return JsonResponse({"results": data})
 
 
 class ComunitiesListView(ListView):
@@ -33,7 +83,7 @@ class ComunitiesListView(ListView):
 
         filter_community = self.request.GET.get("filter", "")
         if filter_community:
-            comunity_filter = Community.objects.filter(genres__name = filter_community).all()
+            comunity_filter = Community.objects.filter(genre__name = filter_community).all()
             context['communities'] = comunity_filter
 
         else:

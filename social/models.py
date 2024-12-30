@@ -12,7 +12,7 @@ class Genre(models.Model):
 class Community(models.Model):
     name = models.CharField(max_length=50)
     
-    genres = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     subscribers = models.ManyToManyField(User,  blank=True, related_name='subscribers')
 

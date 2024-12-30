@@ -12,10 +12,8 @@
                 <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Dropdown link
                   </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <ul class="dropdown-menu" id="genres">
+                  
                 </ul>
               </div>
         </div>
@@ -73,9 +71,42 @@
               {% endif %}
             </ul>
           </nav>
+
         
     </div>
     
-    
+    <script>
+        const filterInput = document.getElementById('filter_communities');
+        const resultDiv = document.getElementById('genres');
+
+        filterInput.addEventListener('input', function() {
+            const query = filterInput.value.trim();
+
+            // Перевірка на порожній запит
+            if (query === '') {
+                resultsDiv.innerHTML = ''; // Очищуємо результати, якщо запит порожній
+                return;
+        };
+        fetch(`/social/communities/filter?query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                resultDiv.innerHTML = ''; // Очищуємо попередні результати
+
+                data.results.forEach(item => {
+                    const itemLi = document.createElement('li');
+                    const itemElement = document.createElement('a');
+                    itemElement.textContent = item.name;
+                    itemElement.className = 'dropdown-item';
+                    itemElement.href = '#';
+                    itemLi.appendChild(itemElement);
+                    resultDiv.appendChild(itemLi);
+                });
+            })
+            .catch(error => console.error('Помилка при пошуку:', error));
+        });
+
+
+
+    </script>
     
 {% endblock %}
