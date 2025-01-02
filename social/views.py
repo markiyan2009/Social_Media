@@ -74,7 +74,7 @@ class ComunitiesListView(ListView):
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-        # fiter_input = self.kwargs['filter_communities']
+        
 
         communities = Community.objects.all()
         
@@ -109,6 +109,7 @@ class SearchCommunitiesView(View):
         if query:
             results = Genre.objects.filter(name__icontains=query)[:10]  
             data = [{'name' : item.name} for item in results]
+            print(data)
         else:
             data = []
 
@@ -122,7 +123,8 @@ class CommunityDetailView(IsSubscriberMixin ,DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         community = context['community']
-        context['profile'] = Profile.objects.filter(user = self.request.user).first()
+        if self.request.user.is_active :
+            context['profile'] = Profile.objects.filter(user = self.request.user).first()
         context['posts'] = community.post_set.all()
         context['discusions'] = community.discusion_set.all()
 

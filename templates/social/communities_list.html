@@ -7,15 +7,11 @@
                 {%csrf_token%}
                 {{form.as_p}}
                 <button type="submit" id="search_button" class="btn btn-secondary">Search</button>
+            
+                <div class="list-group" id="genres">
+                    
+                </div>
             </form>
-            <div class="dropdown">
-                <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown link
-                  </a>
-                <ul class="dropdown-menu" id="genres">
-                  
-                </ul>
-              </div>
         </div>
         
          
@@ -77,7 +73,7 @@
     
     <script>
         const filterInput = document.getElementById('filter_communities');
-        const resultDiv = document.getElementById('genres');
+        var resultDiv = document.getElementById('genres');
 
         filterInput.addEventListener('input', function() {
             const query = filterInput.value.trim();
@@ -93,13 +89,15 @@
                 resultDiv.innerHTML = ''; // Очищуємо попередні результати
 
                 data.results.forEach(item => {
-                    const itemLi = document.createElement('li');
+                    console.log(item)
+                    
                     const itemElement = document.createElement('a');
-                    itemElement.textContent = item.name;
-                    itemElement.className = 'dropdown-item';
+                    itemElement.innerText = item.name;
+                    itemElement.className = 'list-group-item list-group-item-action"';
                     itemElement.href = '#';
-                    itemLi.appendChild(itemElement);
-                    resultDiv.appendChild(itemLi);
+                    
+                    
+                    resultDiv.appendChild(itemElement);
                 });
             })
             .catch(error => console.error('Помилка при пошуку:', error));
