@@ -16,7 +16,7 @@ from django.shortcuts import get_object_or_404
 import random
 
 class HomeView(TemplateView):
-    template_name = 'social/home.html'
+    template_name = 'social/index.html'
 class HomeRandomView(View):
     def get(self, request):
         if request.GET.get('posts-btn'):
