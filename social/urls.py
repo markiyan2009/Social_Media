@@ -6,7 +6,6 @@ from Social_system import settings
 
 
 urlpatterns = [
-    path('', views.HomeView.as_view(), name='home'),
     path('home/random/', views.HomeRandomView.as_view(), name='home_ranndom'),
     path('communities/', views.ComunitiesListView.as_view(), name='communities'),
     path('community/<int:pk>/', views.CommunityDetailView.as_view(), name = 'community'),
