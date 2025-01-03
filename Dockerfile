@@ -7,7 +7,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Set the working directory in the container
-WORKDIR /Social_system
+WORKDIR /app
 
 # Copy requirements file into the container
 COPY requirements.txt /app/
@@ -16,10 +16,10 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code into the container
-COPY . /Social_system/
+COPY . /app/
 
 # Expose the port your application runs on
 EXPOSE 8080
 
 # Command to run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:8080","test_project.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080","Social_system.wsgi:application"]
