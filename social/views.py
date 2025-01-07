@@ -6,7 +6,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from social.models import Comment, Community, Post, Discusion, Genre
 from django.views.generic import ListView, DeleteView, DetailView, UpdateView, View, CreateView, TemplateView
-from social.forms import PostCreateForm, CommentCreateForm, DiscusionCreateForm, CommunitiesFilterForm
+from social.forms import PostCreateForm, CommentCreateForm, DiscusionCreateForm, CommunitiesFilterForm, CommunityCreateForm
 from django.urls import reverse_lazy, reverse
 from autification.models import Profile
 from django.http import JsonResponse, HttpResponseRedirect
@@ -293,5 +293,13 @@ class DiscusionDeleteView(DeleteView):
 
         return get_object_or_404(Discusion, pk=self.kwargs['discusion_pk']) 
     
+class CommunityCreateView(CreateView):
+    model = Community
+    template_name = 'social/community_create.html'
+    form_class = CommunityCreateForm
+    success_url = reverse_lazy('communities')
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        print(self.request.user.id)
+        return super().dispatch(request, *args, **kwargs)
     
     

@@ -20,5 +20,6 @@ urlpatterns = [
     path('post/update/<int:community_pk>/<int:post_pk>/', views.PostUpdateView.as_view(), name = 'post_update'),
     path('post/delete/<int:community_pk>/<int:post_pk>/', views.PostDeleteView.as_view(), name = 'post_delete'),
     path('discusion/delete/<int:community_pk>/<int:discusion_pk>/', views.DiscusionDeleteView.as_view(), name = 'discusion_delete'),
+    path('community/create/', views.CommunityCreateView.as_view(), name = 'community_create'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

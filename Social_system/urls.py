@@ -24,6 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('r^tinymce/', include('tinymce.urls')),
     path('social/', include('social.urls')),
-    path('', HomeView.as_view(), name='home'),
+    path('',  HomeView.as_view(), name='home'),
     path('auth/' , include('autification.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

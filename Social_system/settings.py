@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from django.core.management.utils import get_random_secret_key
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^wmn@z5eqf^hfbsqf4pu@8=kb7@0k14iqetci^t8yfy4-(q@7y'
+SECRET_KEY = os.environ.get('SECRET_KET', 'vk@r8azc7uw4a)qai6&bo_a14$ck^fs)ss*-%4jm15eskapo*@')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', True)
 
-ALLOWED_HOSTS = ['.onrender.com']
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS','127.0.0.1') ]
 
 
 # Application definition
@@ -57,11 +59,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'Social_system.urls'
 
 STORAGES = {
-    # ...
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
 
 TEMPLATES = [
     {

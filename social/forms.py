@@ -31,3 +31,9 @@ class CommunitiesFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(CommunitiesFilterForm, self).__init__(*args, **kwargs)
         self.fields["filter"].widget.attrs.update({"class": "form-control", 'id':'filter_communities', 'name' : "filter_communities"})
+
+class CommunityCreateForm(ModelForm):
+    class Meta:
+        model = Community
+        fields = ['name']
+        
