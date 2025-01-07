@@ -1,4 +1,6 @@
 annotated-types==0.7.0
+cloudinary==1.42.0
+django-cloudinary-storage==0.3.0
 anyio            == 3.7.1
 asgiref         ==  3.8.1
 click            == 8.1.7

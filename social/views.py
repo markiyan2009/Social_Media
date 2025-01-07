@@ -298,8 +298,11 @@ class CommunityCreateView(CreateView):
     template_name = 'social/community_create.html'
     form_class = CommunityCreateForm
     success_url = reverse_lazy('communities')
-    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        print(self.request.user.id)
-        return super().dispatch(request, *args, **kwargs)
-    
+   
+    def form_valid(self, form):
+
+        form.instance.author= self.request.user
+        form.save()
+        form.instance.subscribers.add(self.request.user)
+        return  super().form_valid(form)
     

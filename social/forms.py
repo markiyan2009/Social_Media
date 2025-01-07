@@ -35,5 +35,5 @@ class CommunitiesFilterForm(forms.Form):
 class CommunityCreateForm(ModelForm):
     class Meta:
         model = Community
-        fields = ['name']
+        fields = ['name', 'genre']
         

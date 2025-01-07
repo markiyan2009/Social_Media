@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'autification', 
     'social',
-    'tinymce'
+    'tinymce',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -151,6 +153,16 @@ LOGOUT_REDIRECT_URL = LOGIN_URL
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_URL='/media/'
+
+CLOUDINARY_STORAGE = {
+    'NAME':'den9yj6z5',
+    'API_KEY':'498996848524315',
+    'API_SECRET':'kWT8gvHt4tffDaRQPqv0SADQ5bE'
+}
 
 # # TINYMCE_JS_ROOT = os.path.join(BASE_DIR, 'static/js/tiny_mce/')
 # # TINYMCE_JS_URL = 'http://debug.example.org/tiny_mce/tiny_mce_src.js'
