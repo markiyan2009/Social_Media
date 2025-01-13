@@ -22,7 +22,7 @@ class Community(models.Model):
 class Discusion(models.Model):
     topic = models.CharField(max_length=100)
     author = models.ForeignKey(User, on_delete= models.PROTECT)
-    community = models.ForeignKey(Community, on_delete=models.PROTECT, null=True)
+    community = models.ForeignKey(Community, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.author.username
@@ -39,7 +39,8 @@ class Comment(models.Model):
 class Post(models.Model):
     name = models.CharField(max_length=50)
     post_html = HTMLField()
-    community = models.ForeignKey(Community, on_delete=models.PROTECT, null=True)
+    community = models.ForeignKey(Community, on_delete=models.CASCADE, null=True)
     likes = models.ManyToManyField(User, blank=True, related_name='likes_post')
+    author = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     def __str__(self):
         return self.name

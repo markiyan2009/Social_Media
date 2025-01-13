@@ -31,6 +31,11 @@
                     {%endif%}
                 </form>
             </div>
+            <div class="col">
+                {% if request.user == community.author%}
+                <a href="{% url 'community_delete' community.pk %}"><button class="btn btn-danger">Delete</button></a>
+                {%endif%}
+            </div>
             {% else %}{% endif %}
 
             

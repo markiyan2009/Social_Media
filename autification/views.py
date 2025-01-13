@@ -14,6 +14,7 @@ from social.models import Community
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .forms import ProfileCreateForm, ProfileUpdateForm
 from django import forms
+from django.contrib.auth.models import User
 
 # Create your views here
 
@@ -39,11 +40,13 @@ class ProfileDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['communities'] = self.request.user.subscribers.all()
-
-        profile = Profile.objects.filter(user = self.request.user).first()
         
-        context['profile'] = profile
+        context['profile'] = Profile.objects.filter(pk = self.kwargs['pk']).first()
+        user = context['profile'].user
+        
+        context['communities'] = user.subscribers.all()
+        
+       
         return context
         
 

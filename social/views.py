@@ -137,6 +137,10 @@ class PostDetailView(LoginRequiredMixin,DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['community'] = context['post'].community
+        author = context['post'].author
+        profile = Profile.objects.filter(user = author).first()
+        context['author_profile_pk'] = profile.pk
+        
         return context
     
 class DiscusionDetailView(LoginRequiredMixin ,DetailView):
@@ -167,12 +171,13 @@ class DiscusionDetailView(LoginRequiredMixin ,DetailView):
 class PostCreateView(IsSubscriberFormsMixin ,CreateView):
     form_class = PostCreateForm
     template_name = 'social/post_create.html'
-
+    
     def get_success_url(self):
         return  reverse_lazy('community', kwargs ={'pk' : self.kwargs['community_pk']})
     
     def form_valid(self, form):
         form.instance.community = Community.objects.filter(pk = self.kwargs['community_pk']).first()
+        form.instance.author = self.request.user
         return super().form_valid(form)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -305,4 +310,9 @@ class CommunityCreateView(CreateView):
         form.save()
         form.instance.subscribers.add(self.request.user)
         return  super().form_valid(form)
+    
+class CommunityDeleteView(DeleteView):
+    model = Community
+    template_name = 'social/community_delete.html'
+    success_url = reverse_lazy('communities')
     
