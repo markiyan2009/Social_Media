@@ -2,12 +2,13 @@ from django.urls import path
 from social import views
 from django.conf.urls.static import static
 from Social_system import settings
+from django.views.decorators.cache import cache_page
 
 
 
 urlpatterns = [
     path('home/random/', views.HomeRandomView.as_view(), name='home_ranndom'),
-    path('communities/', views.ComunitiesListView.as_view(), name='communities'),
+    path('communities/',views.ComunitiesListView.as_view(), name='communities'),
     path('community/<int:pk>/', views.CommunityDetailView.as_view(), name = 'community'),
     path('post/<int:pk>/', views.PostDetailView.as_view(), name = 'post_detail'),
     path('discusion/<int:pk>/', views.DiscusionDetailView.as_view(), name = 'discusion'),

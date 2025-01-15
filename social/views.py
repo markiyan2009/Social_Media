@@ -12,11 +12,16 @@ from autification.models import Profile
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import IsSubscriberMixin, IsSubscriberFormsMixin
+
 from django.shortcuts import get_object_or_404 
+
 import random
+
 
 class HomeView(TemplateView):
     template_name = 'social/index.html'
+
+
 class HomeRandomView(View):
     def get(self, request):
         if request.GET.get('posts-btn'):
@@ -115,6 +120,7 @@ class SearchCommunitiesView(View):
 
         return JsonResponse({"results": data})
 
+
 class CommunityDetailView(IsSubscriberMixin ,DetailView):
     model = Community
     template_name = 'social/community_detail.html'
@@ -129,6 +135,8 @@ class CommunityDetailView(IsSubscriberMixin ,DetailView):
         context['discusions'] = community.discusion_set.all()
 
         return context
+    
+
 class PostDetailView(LoginRequiredMixin,DetailView):
     model = Post
     template_name = 'social/post_detail.html'
@@ -142,7 +150,8 @@ class PostDetailView(LoginRequiredMixin,DetailView):
         context['author_profile_pk'] = profile.pk
         
         return context
-    
+
+
 class DiscusionDetailView(LoginRequiredMixin ,DetailView):
     model = Discusion
     template_name = 'social/discusion_detail.html'
@@ -168,6 +177,7 @@ class DiscusionDetailView(LoginRequiredMixin ,DetailView):
 
             return redirect('discusion', pk=comment.discusion.pk)
 
+
 class PostCreateView(IsSubscriberFormsMixin ,CreateView):
     form_class = PostCreateForm
     template_name = 'social/post_create.html'
@@ -183,6 +193,8 @@ class PostCreateView(IsSubscriberFormsMixin ,CreateView):
         context = super().get_context_data(**kwargs)
         context['community'] = Community.objects.filter(pk = self.kwargs['community_pk']).first()
         return context
+    
+
 class LikePostView(LoginRequiredMixin ,View):
     def post(self, request, pk, *args, **kwargs):
         post = Post.objects.filter(pk = pk).first()
@@ -201,7 +213,8 @@ class LikePostView(LoginRequiredMixin ,View):
         
         print(post.likes.count)
         return HttpResponseRedirect(reverse_lazy('post_detail', kwargs={'pk' : post.pk}))
-    
+
+
 class LikeCommentView(LoginRequiredMixin,View):
     def post(self, request, pk, *args, **kwargs):
         comment = Comment.objects.filter(pk = pk).first()
@@ -222,6 +235,7 @@ class LikeCommentView(LoginRequiredMixin,View):
         
         return HttpResponseRedirect(reverse_lazy('discusion', kwargs={'pk' : discusion.pk}))
 
+
 class SubscribeView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         community = Community.objects.filter(pk = self.kwargs['community_pk']).first()
@@ -238,7 +252,8 @@ class SubscribeView(LoginRequiredMixin, View):
             community.subscribers.remove(request.user)
 
         return HttpResponseRedirect(reverse_lazy('communities'))
-    
+
+
 class DiscucsionCreateView(IsSubscriberFormsMixin, CreateView):
     form_class = DiscusionCreateForm
     template_name = 'social/discusion_create.html'
@@ -257,7 +272,8 @@ class DiscucsionCreateView(IsSubscriberFormsMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['community'] = Community.objects.filter(pk =self.kwargs['community_pk']).first()
         return context
-    
+
+  
 class PostDeleteView(DeleteView):
     model = Post
     template_name = 'social/post_delete.html'
@@ -270,7 +286,7 @@ class PostDeleteView(DeleteView):
 
         return post
     
-    
+   
 class PostUpdateView(UpdateView):
     model = Post
     form_class = PostCreateForm
@@ -297,6 +313,7 @@ class DiscusionDeleteView(DeleteView):
         discusion = Discusion.objects.filter(pk = self.kwargs['discusion_pk']).first()
 
         return get_object_or_404(Discusion, pk=self.kwargs['discusion_pk']) 
+
     
 class CommunityCreateView(CreateView):
     model = Community
@@ -311,6 +328,7 @@ class CommunityCreateView(CreateView):
         form.instance.subscribers.add(self.request.user)
         return  super().form_valid(form)
     
+  
 class CommunityDeleteView(DeleteView):
     model = Community
     template_name = 'social/community_delete.html'

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'tinymce',
     'cloudinary',
     'cloudinary_storage',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'Social_system.urls'
@@ -68,6 +70,7 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
 
 
 TEMPLATES = [

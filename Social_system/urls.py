@@ -20,7 +20,9 @@ from django.conf.urls.static import static
 from django.conf import settings
 from social.views import HomeView
 
+
 urlpatterns = [
+    
     path('admin/', admin.site.urls),
     path('r^tinymce/', include('tinymce.urls')),
     path('social/', include('social.urls')),

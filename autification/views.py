@@ -16,6 +16,7 @@ from .forms import ProfileCreateForm, ProfileUpdateForm
 from django import forms
 from django.contrib.auth.models import User
 
+
 # Create your views here
 
 class CustomLoginView(LoginView):
@@ -31,7 +32,7 @@ class CustomLoginView(LoginView):
     
 
 
-    
+   
 class ProfileDetailView(DetailView):
     
     template_name = 'autification/profile_detail.html'
@@ -66,6 +67,7 @@ class RegisterView(CreateView):
         form.fields['password2'].widget = forms.PasswordInput(attrs={'class' : 'form-control'})
         return form
 
+
 class ProfileCreateView(CreateView):
     form_class = ProfileCreateForm
     template_name = 'autification/profile_create.html'
@@ -78,7 +80,8 @@ class ProfileCreateView(CreateView):
     
     def get_success_url(self):
         return reverse_lazy('communities')
-    
+
+   
 class ProfileUpdateView(UpdateView):
     form_class = ProfileUpdateForm
     model = Profile
