@@ -21,7 +21,7 @@ class Community(models.Model):
 
 class Discusion(models.Model):
     topic = models.CharField(max_length=100)
-    author = models.ForeignKey(User, on_delete= models.PROTECT)
+    author = models.ForeignKey(User, on_delete= models.PROTECT, null = True)
     community = models.ForeignKey(Community, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
