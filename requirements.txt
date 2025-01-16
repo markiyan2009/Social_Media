@@ -1,3 +1,5 @@
+django-redis           == 5.4.0
+django-debug-toolbar    ==  5.0.1
 annotated-types==0.7.0
 cloudinary==1.42.0
 django-cloudinary-storage==0.3.0
