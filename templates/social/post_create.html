@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="grid gap-3">
+        <div class="ms-2">
+            <form method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                <label for="bootstrapInputTinyMCE0a" class="form-label"></label>
+                {{form.media}}
+                {{form.as_p}}
+                <button type="submit" class="btn btn-warning">Post</button>
+            </form>
+        </div>
+        <a href="{% url 'community' community.pk%}"><button class="btn btn-primary">Return</button></a>
+    </div>
+{% endblock %}

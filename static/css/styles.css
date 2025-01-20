@@ -1,0 +1,82 @@
+.side-navbar {
+
+    list-style-type: none;
+    
+    
+    width: 25%;
+    background-color: #007FFF;
+    color: white;
+    height: 100%; 
+    position: fixed; 
+    overflow: auto;
+}
+.side-navbar li{
+        padding: 10px;
+}
+
+.coms{
+        font-size: 40px;
+        margin-bottom: 10px;
+        text-decoration: none;
+}
+.coms:hover{
+        text-decoration: underline;
+}
+.post_link{
+        font-size: 20px;
+        text-decoration: none;
+}
+.post_link:hover{
+        text-decoration: underline;
+}
+.center{
+        align-self: center;
+}
+
+
+.profile_photo img{
+        width: 200px !important;
+        height: 200px !important;
+}
+
+
+
+/* .subscribs-button{
+        position: absolute;
+        right: 50px;
+} */
+
+.main{
+        margin-left: 20px;
+}
+#search-buutton{
+        margin-top: 10px;
+}
+
+.main-text{
+        text-align: center;
+        color: white;
+        background-color: #0d6efd;
+        width: 25%;
+        margin: 0 auto;
+        padding: 5px;      
+}
+
+
+.post-detail{
+        position: relative;
+}
+.subscribers{
+        position: absolute;
+        top: 20px;
+        right: 10px;
+}
+.comments{
+        padding-bottom: 10px;
+}
+.about_user{
+        margin: 15px;
+        padding: 10px;
+        background-color: #0d6efd;
+        color: white;
+}

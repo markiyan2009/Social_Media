@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Create discusion form</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-warning">Create</button>
+    </form>
+    <a href="{% url 'community' community.pk%}"><button class="btn btn-primary">Return</button></a>
+{% endblock %}

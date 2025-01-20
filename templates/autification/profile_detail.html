@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        
+        <div class="row">
+            <h1>{{profile.name}}</h1>
+        </div>
+        <div class="row">
+            <div class="col-1 profile_photo ">
+                <img src="{{profile.photo.url}}" class="rounded-circle">
+            </div>
+            
+
+            
+            <div class="dropdown">
+                
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Subscribes
+                </a>
+                <ul class="dropdown-menu">
+                    
+                    {% for community in communities %}
+                        <li><a class="dropdown-item" href="{% url 'community' community.pk %}">{{community.name}}</a></li>
+                    {% endfor %}
+            </div>
+        </div>
+        
+        <div class="row about_user rounded">
+            <p>{{profile.about_user}}</p>
+        </div>
+        {% if request.user == profile.user  %}
+        <div class="row">
+
+            <a href="{% url 'profile_update' profile.pk %}"><button type="submit" class="btn btn-warning">Update</button></a>
+        </div>
+        {%endif%}
+
+
+        
+    </div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container post-detail  ">
+        <div class='main-text rounded'>
+            <h1 >{{community.name}}</h1>
+        </div>
+        <div class="subscribers">
+            <h5>Subscribers:{{community.subscribers.count}}</h5>
+        </div>
+        
+        <div class="row d-flex " style="text-align: center;">
+            <div class="col">
+                <h3>Post</h3> <br>
+                {% for post in posts %}
+                    <div class="col" style="margin-bottom: 20px;">
+                        <a href="{% url 'post_detail' post.pk %}" class="post_link" style="margin-right: 20px;">{{post.name}}</a>
+                        {% if community.author == request.user %}
+
+                            
+                            <a href="{% url 'post_update' community.pk post.pk %}"><button type="submit" class="btn btn-warning">Update</button></a>
+                            <a href="{% url 'post_delete' community.pk post.pk %}"><button type="submit" class="btn btn-danger">Delete</button></a>
+                            
+                            
+                        {% endif %}
+                    </div>
+                {%endfor%}
+                <div class="col" style="margin-top: 20px;">
+                {% if community.author == request.user%}
+                    <a href="{% url 'post_create' community.pk %}"><button type="submit" class="btn btn-dark">Create post</button></a>
+                {% else %}{%endif%}
+                </div>
+                    
+            </div>
+            <div class="col">
+                <h3>Discusion </h3> <br>
+                {% for discusion in discusions %}
+                    <div class="col" style="margin-bottom: 20px;">
+                        <a href="{% url 'discusion' discusion.pk %}" class="post_link" style="margin-right: 20px;">{{discusion.topic}}</a> 
+                        {% if discusion.author == request.user %}
+                            
+                                <a href="{% url 'discusion_delete' community.pk discusion.pk %}"><button type="submit" class="btn btn-danger">Delete</button></a>
+                            
+                                
+                            
+                            
+                        {% endif %}
+                    </div>
+                {%endfor%}
+                <div class="col" style="margin-top: 20px;">
+                    {% if is_subscriber or community.author == request.user %}
+                    <a href="{% url 'discusion_create' community.pk %}"><button type="submit" class="btn btn-dark">Create discusion</button></a>
+                    {% else %}{%endif%}
+                </div>
+                 
+            </div>
+        </div>
+        
+    </div>
+{%endblock%}

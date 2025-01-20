@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container center">
+        <div class="row-3">
+            
+            <form method="get">
+                {%csrf_token%}
+                {{form.as_p}}
+                <button type="submit" id="search_button" class="btn btn-secondary">Search</button>
+            
+                <div class="list-group" id="genres">
+                    
+                </div>
+            </form>
+        </div>
+        
+         
+        {% for community in communities %}
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'community' community.pk %}" class="coms">{{community.name}}</a>  
+            </div>
+            {% if request.user.is_authenticated %}
+            <div class="col">
+                <form action="{% url 'subscribe' community.pk %}" method="post">
+                    {% csrf_token %}
+                    {% if request.user in community.subscribers.all  %}
+                        <button type="submit" class="btn btn-outline-primary">You subscribed</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    {%endif%}
+                </form>
+            </div>
+            <div class="col">
+                {% if request.user == community.author%}
+                <a href="{% url 'community_delete' community.pk %}"><button class="btn btn-danger">Delete</button></a>
+                {%endif%}
+            </div>
+            {% else %}{% endif %}
+
+            
+        </div>
+            
+        {% endfor %}
+        
+        <nav aria-label="...">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    
+                    <span class="page-link"><a href="?page={{ page_obj.previous_page_number }}">previous</a></span>
+                </li>
+                {%endif%}
+                {% for i in page_obj.paginator.page_range %}
+                    
+                    {% if i == page_obj.number %}
+                    <li class="page-item active">
+                        <span class="page-link">
+                        {{i}}
+                        
+                        </span>
+                    </li>
+                    {% else %}
+
+                    <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                    {% endif %}
+                {% endfor %}
+              {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
+          <button type="submit" class="btn btn-warning "><a href="{% url 'community_create' %}" style="text-decoration: none;">Create community</a></button>
+
+        
+    </div>
+    
+    <script>
+        const filterInput = document.getElementById('filter_communities');
+        var resultDiv = document.getElementById('genres');
+
+        filterInput.addEventListener('input', function() {
+            const query = filterInput.value.trim();
+
+            // Перевірка на порожній запит
+            if (query === '') {
+                resultsDiv.innerHTML = ''; // Очищуємо результати, якщо запит порожній
+                return;
+        };
+        fetch(`/social/communities/filter?query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                resultDiv.innerHTML = ''; // Очищуємо попередні результати
+
+                data.results.forEach(item => {
+                    console.log(item)
+                    
+                    const itemElement = document.createElement('a');
+                    itemElement.innerText = item.name;
+                    itemElement.className = 'list-group-item list-group-item-action"';
+                    itemElement.href = '#';
+                    
+                    
+                    resultDiv.appendChild(itemElement);
+                });
+            })
+            .catch(error => console.error('Помилка при пошуку:', error));
+        });
+
+
+
+    </script>
+    
+{% endblock %}

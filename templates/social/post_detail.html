@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    {{post.post_html|safe}}
+    
+    <div class="row">
+        <div class="col">
+            <form action="{% url 'like_post' post.pk %}" method="post">
+                {%csrf_token%}
+                <button type="submit" class='btn btn-danger'>Like</button>
+                <span>{{post.likes.count}}</span>
+            </form>
+        </div>
+        <div class="col">
+            
+            Author: <a href="{% url 'profile_detail' author_profile_pk %}">{{post.author.username}}</a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <a href="{% url 'community' community.pk%}"><button class="btn btn-primary">Return</button></a>
+    </div>
+    
+{% endblock %}

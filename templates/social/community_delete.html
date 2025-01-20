@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Delete community</h3>
+<h5>Do you realy want delete community?</h5>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a href="{% url 'communities' %}" class="btn btn-secondary">No, return to communities list</a>
+</form>
+
+{% endblock %}
