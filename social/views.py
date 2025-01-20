@@ -12,9 +12,7 @@ from autification.models import Profile
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import IsSubscriberMixin, IsSubscriberFormsMixin
-
 from django.shortcuts import get_object_or_404 
-
 import random
 
 
