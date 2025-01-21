@@ -8,7 +8,7 @@ from django.views.decorators.cache import cache_page
 
 urlpatterns = [
     path('home/random/', views.HomeRandomView.as_view(), name='home_ranndom'),
-    path('communities/',views.ComunitiesListView.as_view(), name='communities'),
+    path('communities/', cache_page(60*5)(views.ComunitiesListView.as_view()), name='communities'),
     path('community/<int:pk>/', views.CommunityDetailView.as_view(), name = 'community'),
     path('post/<int:pk>/', views.PostDetailView.as_view(), name = 'post_detail'),
     path('discusion/<int:pk>/', views.DiscusionDetailView.as_view(), name = 'discusion'),

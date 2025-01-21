@@ -19,10 +19,12 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from social.views import HomeView
+import debug_toolbar
+
 
 
 urlpatterns = [
-    
+    path('__debug__/', include(debug_toolbar.urls)),
     path('admin/', admin.site.urls),
     path('r^tinymce/', include('tinymce.urls')),
     path('social/', include('social.urls')),

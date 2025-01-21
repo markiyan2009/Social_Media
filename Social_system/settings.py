@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from django.core.management.utils import get_random_secret_key
+import mimetypes
+mimetypes.add_type("application/javascript", ".js", True)
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +32,19 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-tnxyjc%l%bdo!ov66=5!a
 DEBUG = os.environ.get('DEBUG', True)
 ALLOWED_HOST = '.onrender.com'
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS','127.0.0.1') ]
+import mimetypes
+if DEBUG:
+    
+    mimetypes.add_type("application/javascript", ".js", True)
 
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(BASE_DIR,'cache'),
+        
+    }
+}
 
 # Application definition
 
@@ -51,6 +66,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -120,6 +136,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+SESSIONS_ENGINE='django.contrib.sessions.backends.cache'
+
+
 
 
 # Internationalization
@@ -166,6 +185,8 @@ CLOUDINARY_STORAGE = {
     'API_KEY':'498996848524315',
     'API_SECRET':'kWT8gvHt4tffDaRQPqv0SADQ5bE'
 }
+
+INTERNAL_IPS = ['127.0.0.1']
 
 # # TINYMCE_JS_ROOT = os.path.join(BASE_DIR, 'static/js/tiny_mce/')
 # # TINYMCE_JS_URL = 'http://debug.example.org/tiny_mce/tiny_mce_src.js'
